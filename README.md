@@ -49,6 +49,10 @@ $ `bin/artisan migrate`
 
 $ `bin/artisan db:seed`
 
+### Seed Database with Test Data
+
+$ `bin/artisan db:seed --class=MockDataSeeder`
+
 ### Install NPM Dependencies
 
 $ `bin/npm install`
