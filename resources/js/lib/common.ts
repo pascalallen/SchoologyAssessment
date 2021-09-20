@@ -1,31 +1,47 @@
 import _ from 'lodash';
 import { AnyObject } from '@/types/common';
 
-export const removeEmptyQueryParams = (obj: AnyObject, ...customValues: (string | number)[]): AnyObject => {
-  // removes from the queryParams object any empty value so that is not added to the queryString
-  _.forEach(obj, (value, key) => {
+type QueryParamsObject = {
+  [key: string]:
+    | number
+    | boolean
+    | string
+    | any[]
+    | {[key: string]: number | boolean | string | any[] | undefined | null}
+    | undefined
+    | null;
+};
+
+export const removeEmptyKeys = (params: QueryParamsObject): QueryParamsObject => {
+  _.forEach(params, (value, key) => {
     if (
       _.isNil(value) ||
       _.isUndefined(value) ||
       _.isNaN(value) ||
-      _.isFunction(value) ||
-      _.isObject(value) ||
+      (_.isArray(value) && _.isEmpty(value)) ||
       value === ''
     ) {
-      delete obj[key];
+      delete params[key];
     }
-
-    _.forEach(customValues, cv => {
-      if (value === cv) {
-        delete obj[key];
-      }
-    });
+    if (_.isObject(value) || _.isArray(value)) {
+      _.forEach(params, (value, key) => {
+        if (
+          _.isNil(value) ||
+          _.isUndefined(value) ||
+          _.isNaN(value) ||
+          (_.isArray(value) && _.isEmpty(value)) ||
+          value === ''
+        ) {
+          delete params[key];
+        }
+      });
+    }
   });
 
-  return obj;
+  return params;
 };
 
-export const queryStringify = (params: { [key: string]: number | string | string[] | undefined }): string => {
+export const queryStringify = (params: QueryParamsObject): string => {
   const query = _.chain(params)
     .keys()
     .map(key => {

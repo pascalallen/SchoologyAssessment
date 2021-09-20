@@ -1,6 +1,6 @@
-export type ApiResponse<Data> = {
+export type ApiResponse = {
   status: string;
-  data: Data;
+  data: any;
 };
 
 export type ApiOptions = {
