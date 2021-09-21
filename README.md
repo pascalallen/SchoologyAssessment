@@ -1,9 +1,5 @@
 # Schoology Technical Assessment
 
-![NPM Build Status](https://github.com/pascalallen/SchoologyAssessment/workflows/NPM/badge.svg)
-![Docker Compose Build Status](https://github.com/pascalallen/SchoologyAssessment/workflows/Docker%20Compose/badge.svg)
-![Laravel Build Status](https://github.com/pascalallen/SchoologyAssessment/workflows/Laravel/badge.svg)
-
 Technical assessment for Schoology
 
 ## Prerequisites
