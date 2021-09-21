@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { AnyObject } from '@/types/common';
 
 type QueryParamsObject = {
   [key: string]:
@@ -7,7 +6,7 @@ type QueryParamsObject = {
     | boolean
     | string
     | any[]
-    | {[key: string]: number | boolean | string | any[] | undefined | null}
+    | { [key: string]: number | boolean | string | any[] | undefined | null }
     | undefined
     | null;
 };
