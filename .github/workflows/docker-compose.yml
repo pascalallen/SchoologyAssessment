@@ -1,32 +1,39 @@
 name: Docker Compose
 
 on:
-    push:
-        branches: [ develop ]
-    pull_request:
-        branches: [ master, stage, develop ]
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ master, stage, develop ]
 
 jobs:
-    docker-compose-tests:
+  docker-compose-tests:
 
-        runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-        steps:
-            -   uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-            -   name: Build or rebuild services
-                env:
-                    DB_DATABASE: schoology_assessment
-                    DB_PASSWORD: password
-                    DB_USERNAME: sail
-                run: docker-compose build
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-            -   name: Create and start containers
-                env:
-                    DB_DATABASE: schoology_assessment
-                    DB_PASSWORD: password
-                    DB_USERNAME: sail
-                run: docker-compose up -d
+      - name: Build or rebuild services
+        env:
+          DB_DATABASE: schoology_assessment
+          DB_PASSWORD: password
+          DB_USERNAME: sail
+          WWWGROUP: 1337
+          WWWUSER: sail
+        run: docker-compose build
 
-            -   name: Stop and remove containers, networks, images, and volumes
-                run: docker-compose down
+      - name: Create and start containers
+        env:
+          DB_DATABASE: schoology_assessment
+          DB_PASSWORD: password
+          DB_USERNAME: sail
+          WWWGROUP: 1337
+          WWWUSER: sail
+        run: docker-compose up -d
+
+      - name: Stop and remove containers, networks, images, and volumes
+        run: docker-compose down

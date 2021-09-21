@@ -1,59 +1,21 @@
-import React, {useState} from 'react';
-import {Helmet} from 'react-helmet-async';
-import Autosuggest from 'react-autosuggest';
-import {User} from '@/types/data';
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import Autocomplete from '@/components/Autocomplete/Autocomplete';
+import { User } from '@/types/data';
 import userService from '@/service/userService';
 
-type State = {
-  value: string;
-  suggestions: User[];
-};
-
-const initialState: State = {
-  value: '',
-  suggestions: []
-};
-
 const Home = (): React.ReactElement => {
-  const [value, setValue] = useState(initialState.value);
-  const [suggestions, setSuggestions] = useState(initialState.suggestions);
-
-  const onChange = (event: React.FormEvent, {newValue}: any) => {
-    setValue(newValue);
+  const handleFetchUsers = (searchTerm: string) => {
+    return userService.getAllBySearchTerm({ search_term: searchTerm });
   };
 
-  const onSuggestionsFetchRequested = async ({value}: any) => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
+  const handleGetSuggestionValue = (suggestion: User): string => suggestion.name;
 
-    if (inputLength === 0) {
-      setSuggestions([]);
-      return;
-    }
-
-    const users = await userService.getAllBySearchTerm({search_term: value});
-    setSuggestions(users);
-
-    return;
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const getSuggestionValue = (suggestion: User): string => suggestion.name;
-
-  const renderSuggestion = (suggestion: User): React.ReactElement => (
-    <div>
-      {suggestion.name}
-    </div>
+  const handleRenderSuggestion = (suggestion: User): React.ReactElement => (
+    <span>
+      {suggestion.name} - {suggestion.email}
+    </span>
   );
-
-  const inputProps = {
-    placeholder: 'Start searching for a user',
-    value,
-    onChange: onChange
-  };
 
   return (
     <div className="home-container container">
@@ -63,13 +25,10 @@ const Home = (): React.ReactElement => {
       <div className="row my-5">
         <div className="col">
           <h4 className="mb-5">User Search</h4>
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
+          <Autocomplete
+            onSuggestionsFetch={handleFetchUsers}
+            onGetSuggestionValue={handleGetSuggestionValue}
+            onRenderSuggestion={handleRenderSuggestion}
           />
         </div>
       </div>

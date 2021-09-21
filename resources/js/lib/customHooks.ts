@@ -2,7 +2,7 @@
  * THESE METHODS CAN ONLY BE CALLED INSIDE OF THE BODY OF A REACT FUNCTIONAL COMPONENT
  */
 
-import { DependencyList, EffectCallback, useEffect, useRef, useState } from 'react';
+import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import { AnyObject } from '@/types/common';
 
