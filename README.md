@@ -82,3 +82,13 @@ $ `bin/down`
 Code style configuration file for PhpStorm is available for import: [CodeStyle.xml](etc/build/CodeStyle.xml)
 
 [Copying Code Style Settings](https://www.jetbrains.com/help/phpstorm/copying-code-style-settings.html)
+
+### Schoology Technical Assessment Setup Instructions
+
+1. Clone repo and setup project locally
+2. After database and schema have been setup, run `bin/artisan db:seed --class=MockDataSeeder`
+3. After dependency installation and compilation, you can view the website locally by going to http://localhost
+4. Using cURL to query the database for search results via API endpoint:
+```
+curl "http://localhost/api/users/search?search_term=ea"
+```
