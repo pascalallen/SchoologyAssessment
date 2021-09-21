@@ -19,6 +19,8 @@ jobs:
                     DB_DATABASE: schoology_assessment
                     DB_PASSWORD: password
                     DB_USERNAME: sail
+                    WWWGROUP: pascalallen
+                    WWWUSER: pascalallen
                 run: docker-compose build
 
             -   name: Create and start containers
@@ -26,6 +28,8 @@ jobs:
                     DB_DATABASE: schoology_assessment
                     DB_PASSWORD: password
                     DB_USERNAME: sail
+                    WWWGROUP: pascalallen
+                    WWWUSER: pascalallen
                 run: docker-compose up -d
 
             -   name: Stop and remove containers, networks, images, and volumes
